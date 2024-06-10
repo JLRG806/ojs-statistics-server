@@ -1,0 +1,19 @@
+version: '3'
+services:
+  site:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: statistics_server
+    env_file:
+      - .env
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    command: "npm run start"
+    networks:
+      - statistics_net
+
+networks:
+  statistics_net:
+    driver: bridge
