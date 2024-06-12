@@ -13,18 +13,21 @@ const timelineIntervalSchema = Joi.object({
 const statsIssuesTimelineSchemaByMonth = Joi.object({
     dateStart: Joi.date().format('YYYY-MM-DD').max(todayDate).required(),
     dateEnd: Joi.date().format('YYYY-MM-DD').max(todayDate).required(),
+    context: Joi.string().pattern(/^(?=.*[a-zA-Z\d].*)[a-zA-Z\d-]{1,}$/, 'context').required(),
     type: Joi.string().valid('files')
 })
 
 const statsIssuesTimelineSchemaByDay = Joi.object({
     dateStart: Joi.date().format('YYYY-MM-DD').less(Joi.ref('dateEnd')).required(),
     dateEnd: Joi.date().format('YYYY-MM-DD').max(todayDate).required(),
+    context: Joi.string().pattern(/^(?=.*[a-zA-Z\d].*)[a-zA-Z\d-]{1,}$/, 'context').required(),
     type: Joi.string().valid('files')
 })
 
 const statsIssuesTimelineSchemaByYear = Joi.object({
     dateStart: Joi.date().format('YYYY').less(Joi.ref('dateEnd')).required(),
     dateEnd: Joi.date().format('YYYY').max(todayDate).required(),
+    context: Joi.string().pattern(/^(?=.*[a-zA-Z\d].*)[a-zA-Z\d-]{1,}$/, 'context').required(),
     type: Joi.string().valid('files')
 })
 
@@ -37,11 +40,11 @@ export const timelineIntervalSchemaHandler = (timelineInterval) => {
     return false
 }
 
-export const statsIssuesTimelineSchemaHandler = (dateStart, dateEnd, timelineInterval, type) => {
+export const statsIssuesTimelineSchemaHandler = (dateStart, dateEnd, timelineInterval, context, type) => {
 
     if (timelineInterval == 'month') {
 
-        const { error } = statsIssuesTimelineSchemaByMonth.validate({ dateStart, dateEnd, type })
+        const { error } = statsIssuesTimelineSchemaByMonth.validate({ dateStart, dateEnd, context, type })
         if (error) {
             return { error: error.details[0].message }
         }
@@ -50,7 +53,7 @@ export const statsIssuesTimelineSchemaHandler = (dateStart, dateEnd, timelineInt
 
     if (timelineInterval == 'day') {
 
-        const { error } = statsIssuesTimelineSchemaByDay.validate({ dateStart, dateEnd, type })
+        const { error } = statsIssuesTimelineSchemaByDay.validate({ dateStart, dateEnd, context, type })
         if (error) {
             return { error: error.details[0].message }
         }
@@ -59,7 +62,7 @@ export const statsIssuesTimelineSchemaHandler = (dateStart, dateEnd, timelineInt
 
     if (timelineInterval == 'year') {
 
-        const { error } = statsIssuesTimelineSchemaByYear.validate({ dateStart, dateEnd, type })
+        const { error } = statsIssuesTimelineSchemaByYear.validate({ dateStart, dateEnd, context, type })
         if (error) {
             return { error: error.details[0].message }
         }
