@@ -1,11 +1,18 @@
 import config from './config/config.js';
 import express from 'express';
+import cors from './middlewares/cors.js';
 import morgan from 'morgan';
 import { Agent, setGlobalDispatcher } from 'undici';
 import { timelineIntervalSchemaHandler, statsIssuesTimelineSchemaHandler } from './schemas.js';
 import { URLSearchParams } from 'url';
+import { error } from 'console';
+import { da } from 'date-fns/locale';
 
 const server = express();
+
+// Configure CORS
+server.options('*', cors);
+server.use(cors);
 
 // Configure middlewares
 server.use(morgan('dev'));
@@ -59,10 +66,13 @@ server.get('/stats/issues/timeline', validateTimelineInterval, validateStatsIssu
 
         const statusCode = response.status;
         if (statusCode >= 400 && statusCode < 500) {
-            return res.sendStatus(statusCode);
+            //const data = await response.json();
+            //console.error(data);
+            return res.status(statusCode).json(await response.text());
         }
 
         if (statusCode >= 500 && statusCode < 600) {
+            console.error(await response.json());
             return res.sendStatus(statusCode);
         }
 
