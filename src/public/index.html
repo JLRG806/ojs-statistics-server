@@ -1,24 +1,19 @@
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
 <div class="container rounded mx-auto shadow-xl p-3">
 
     <!-- Input Number -->
-    <div class="bg-white border border-gray-200 rounded-lg w-fit">
-        <div class="w-full flex justify-between items-center gap-x-1">
+    <div class="w-fit bg-white border border-gray-200 rounded-lg" data-hs-input-number="">
+        <div class="w-fit flex justify-start items-center gap-x-1">
             <div class="grow py-2 px-3">
-                <span class="w-full p-1 bg-transparent border-0 text-gray-800 focus:ring-0" type="text"
-                    value="2025">2025</span>
+                <input class="w-auto p-0 bg-transparent border-0 text-gray-800 focus:ring-0" type="text" value="1"
+                    data-hs-input-number-input="">
             </div>
             <div class="flex items-center -gap-y-px divide-x divide-gray-200 border-s border-gray-200">
                 <button type="button"
                     class="size-10 inline-flex justify-center items-center gap-x-2 text-sm font-medium last:rounded-e-lg bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                    data-hs-input-number-decrement="1">
+                    data-hs-input-number-decrement="">
                     <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -27,7 +22,7 @@
                 </button>
                 <button type="button"
                     class="size-10 inline-flex justify-center items-center gap-x-2 text-sm font-medium last:rounded-e-lg bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                    data-hs-input-number-increment="1">
+                    data-hs-input-number-increment="">
                     <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -42,42 +37,51 @@
 
     <hr class="border-solid border border-gray-300 rounded my-3 mx-1">
 
-    <button onclick="updateChart('month')">Mes</button>
-    <button onclick="updateChart('year')">Año</button>
+    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5">
+        <!-- Start buttons -->
+        <div class="inline-flex border border-gray-200 rounded-full px-1.5 py-1 m-3">
+            <button type="button" autofocus id="btnMonthly"
+                class="flex-auto mr-1 w-10 border inline-flex flex-shrink-0 justify-center items-center size-12 rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Mensual
+            </button>
+            <button type="button" id="btnYearly"
+                class="flex-auto mr-1 w-10 border inline-flex flex-shrink-0 justify-center items-center size-12 rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Anual
+            </button>
+        </div>
 
-    <div id="reportranges"
-        style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+        <!-- <div id="reportranges"
+            style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
 
-        <i class="fa fa-calendar"></i>
 
-        <span id="dateSpan"></span>
-        <!-- <input type="text" name="reportrange" id="reportrange" class="appearance-none required:border-red-500"> -->
-        <div class="w-60">
-            <div class="relative h-10 w-full min-w-[200px]">
-                <!-- <i class="material-icons" style="font-size: 1.3rem;">calendar_month</i> -->
-                <label for="reportrange" class=""> Test
-                    <input type="text" name="reportrange" id="reportrange"
+            <input type="text" name="reportrange" id="reportrange" class="appearance-none required:border-red-500">
+            <div class="w-60">
+                <div class="relative h-10 w-full min-w-[200px]">
+                    <i class="material-icons" style="font-size: 1.3rem;">calendar_month</i>
+                    <label for="reportrange">
+                        <input type="text" name="reportrange" id="reportrange"
                         class="peer h-full w-full rounded-[7px]  !border  !border-gray-300 border-t-transparent bg-transparent bg-white px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700  shadow-lg shadow-gray-900/5 outline outline-0 ring-4 ring-transparent transition-all placeholder:text-gray-500 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2  focus:!border-gray-900 focus:border-t-transparent focus:!border-t-gray-900 focus:outline-0 focus:ring-gray-900/10 disabled:border-0 disabled:bg-blue-gray-50" />
-                </label>
-                <!-- <i class="material-icons" style="font-size: 1.3rem;">expand_more</i> -->
+                    </label>
+                    <i class="material-icons" style="font-size: 1.3rem;">expand_more</i>
+                </div>
             </div>
+        </div> -->
+        <!-- End buttons -->
+        <div class="p-3 mt-2 border rounded-lg">
+            <canvas id="myChart"></canvas>
         </div>
+    </div>
 
-        <div class="year-selector">
-            <label for="year">Select Year:</label>
-            <select id="year" class="form-control">
-                <!-- Options will be added dynamically -->
-            </select>
-        </div>
-    </div>
-    <div class="p-2">
-        <canvas id="myChart"></canvas>
-    </div>
+
+
 </div>
 
-
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
 <script type="text/javascript">
-
     class FetchData {
 
         #url;
@@ -85,10 +89,10 @@
         #context;
 
         constructor() {
+            console.log("FetchData constructor")
             //this.url = window.location.href;
             this.#url = 'http://localhost:8000/stats/issues/timeline?';
-            //this.#contextUrl = window.location.href;
-            this.#contextUrl = 'https://v2.mls.quimera.internal/index.php/MLS-Law-International-Politics/index';
+            this.#contextUrl = window.location.href;
             this.#context = this.getContext();
         }
 
@@ -197,7 +201,9 @@
     }
 
     class DateRangePickerClass {
+
         constructor(start, end) {
+            console.log("DateRangePickerClass constructor")
             this.start = start
             this.end = end
         }
@@ -239,36 +245,102 @@
             }, this.cb);
 
             this.cb(this.start, this.end);
-
-            // Populate the year selector
-            // var startYear = 2000; // Starting year for the dropdown
-            // var endYear = new Date().getFullYear(); // Current year
-            // var $yearSelector = $('#year');
-            // for (var year = startYear; year <= endYear; year++) {
-            //     $yearSelector.append($('<option>', {
-            //         value: year,
-            //         text: year
-            //     }));
-            // }
-
-            // Event listener for year selector change
-            // $('#year').change(function () {
-            //     console.log("year event")
-            //     var selectedYear = $(this).val();
-            //     $('#dateSpan').val(selectedYear + '-01-01 to ' + selectedYear + '-12-31');
-            // });
         }
     }
 
+    let CHART_TIME_INTERVAL = 'month';
+
     // Initialize the date range picker
     $(document).ready(function () {
-        console.log("ready!")
-        let start = moment().subtract(29, 'days')
-        let end = moment().subtract(1, 'days')
-        const drp = new DateRangePickerClass(start, end)
-        drp.startDatePicker()
+        CHART_TIME_INTERVAL = 'month';
+        console.log('Monthly')
+        const fetchData = new FetchData();
+        let downloadsData;
+        let viewsData;
+        if (inputElement.value === moment().format('YYYY')) {
+            fetchData.fetchData(`${inputElement.value}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'files').then(data => {
+                downloadsData = data;
+                fetchData.fetchData(`${inputElement.value}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'views').then(data => {
+                    viewsData = data;
+                    const labels = downloadsData.map(item => item.label);
+                    const dataDownloads = downloadsData.map(item => item.value);
+                    const dataViews = viewsData.map(item => item.value);
+
+                    updateChart({ labels, dataDownloads, dataViews })
+                });
+            });
+        } else {
+            fetchData.fetchData(`${inputElement.value}-01-01`, `${inputElement.value}-12-31`, 'month', 'files').then(data => {
+                downloadsData = data;
+                fetchData.fetchData(`${inputElement.value}-01-01`, `${inputElement.value}-12-31`, 'month', 'views').then(data => {
+                    viewsData = data;
+                    const labels = downloadsData.map(item => item.label);
+                    const dataDownloads = downloadsData.map(item => item.value);
+                    const dataViews = viewsData.map(item => item.value);
+
+                    updateChart({ labels, dataDownloads, dataViews })
+                });
+            });
+        }
     });
 
+    $('#btnMonthly').click(function () {
+        CHART_TIME_INTERVAL = 'month';
+        console.log('Monthly')
+        const fetchData = new FetchData();
+        let downloadsData;
+        let viewsData;
+        if (inputElement.value === moment().format('YYYY')) {
+            fetchData.fetchData(`${inputElement.value}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'files').then(data => {
+                downloadsData = data;
+                fetchData.fetchData(`${inputElement.value}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'views').then(data => {
+                    viewsData = data;
+                    const labels = downloadsData.map(item => item.label);
+                    const dataDownloads = downloadsData.map(item => item.value);
+                    const dataViews = viewsData.map(item => item.value);
+
+                    updateChart({ labels, dataDownloads, dataViews })
+                });
+            });
+        } else {
+            fetchData.fetchData(`${inputElement.value}-01-01`, `${inputElement.value}-12-31`, 'month', 'files').then(data => {
+                downloadsData = data;
+                fetchData.fetchData(`${inputElement.value}-01-01`, `${inputElement.value}-12-31`, 'month', 'views').then(data => {
+                    viewsData = data;
+                    const labels = downloadsData.map(item => item.label);
+                    const dataDownloads = downloadsData.map(item => item.value);
+                    const dataViews = viewsData.map(item => item.value);
+
+                    updateChart({ labels, dataDownloads, dataViews })
+                });
+            });
+        }
+    });
+
+    $('#btnYearly').click(async function () {
+        CHART_TIME_INTERVAL = 'year';
+        console.log('Yearly')
+        const fetchData = new FetchData();
+        let downloadsData;
+        let viewsData;
+
+        if (inputElement.value === moment().format('YYYY')) {
+            downloadsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'files');
+            viewsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'views');
+        } else {
+            downloadsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, `${inputElement.value}-12-31`, 'month', 'files');
+            viewsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, `${inputElement.value}-12-31`, 'month', 'views');
+        }
+
+        const labels = downloadsData.map(item => item.label);
+        const dataDownloads = downloadsData.map(item => item.value);
+        const dataViews = viewsData.map(item => item.value);
+
+        updateChart({ labels, dataDownloads, dataViews })
+
+    });
+
+    // Initialize the chartS
 
     const ctx = document.getElementById('myChart');
 
@@ -314,32 +386,110 @@
             plugins: {
                 legend: {
                     display: true,
-                    position: 'top',
-                    
+                    position: 'top'
+                },
+                title: {
+                    display: true,
+                    text: 'Downloads and Views',
+                    font: {
+                        size: 20
+                    }
                 }
             }
         }
     });
 
-    const getData = (period) => {
-        let labels = [];
-        let dataDownloads = [];
-        let dataViews = [];
-        const now = new Date();
+    const plusButton = document.querySelector('[data-hs-input-number-increment]');
+    const minusButton = document.querySelector('[data-hs-input-number-decrement]');
+    const inputElement = document.querySelector('[data-hs-input-number-input]');
+    inputElement.setAttribute('max', moment().format('YYYY'))
+    inputElement.setAttribute('min', 2000);
+    inputElement.value = moment().format('YYYY');
 
-        if (period === 'month') {
-            const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-            labels = Array.from({ length: daysInMonth }, (_, i) => i + 1 + "Test");
-            dataDownloads = Array.from({ length: daysInMonth }, () => Math.floor(Math.random() * 20) + 1);
-            dataViews = Array.from({ length: daysInMonth }, () => Math.floor(Math.random() * 20) + 1);
-        } else if (period === 'year') {
-            labels = Array.from({ length: 12 }, (_, i) => new Date(0, i).toLocaleString('default', { month: 'short' }));
-            dataDownloads = Array.from({ length: 12 }, () => Math.floor(Math.random() * 100) + 1);
-            dataViews = Array.from({ length: 12 }, () => Math.floor(Math.random() * 100) + 1);
+    plusButton.addEventListener('click', async () => {
+        console.log('plus')
+        const currentValue = parseInt(inputElement.value);
+        if (currentValue >= 2000 && currentValue < moment().format('YYYY')) {
+            inputElement.value = currentValue + 1;
+        } else {
+            inputElement.value = moment().format('YYYY');
         }
-        console.log(labels, dataDownloads, dataViews)
-        return { labels, dataDownloads, dataViews };
-    };
+
+        try {
+            const fetchData = new FetchData();
+            let downloadsData;
+            let viewsData;
+
+            if (CHART_TIME_INTERVAL === 'month') {
+                if (inputElement.value === moment().format('YYYY')) {
+                    downloadsData = await fetchData.fetchData(`${inputElement.value}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'files');
+                    viewsData = await fetchData.fetchData(`${inputElement.value}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'views');
+                } else {
+                    downloadsData = await fetchData.fetchData(`${inputElement.value}-01-01`, `${inputElement.value}-12-31`, 'month', 'files');
+                    viewsData = await fetchData.fetchData(`${inputElement.value}-01-01`, `${inputElement.value}-12-31`, 'month', 'views');
+                }
+            } else {
+                if (inputElement.value === moment().format('YYYY')) {
+                    downloadsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'files');
+                    viewsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'views');
+                } else {
+                    downloadsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, `${inputElement.value}-12-31`, 'month', 'files');
+                    viewsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, `${inputElement.value}-12-31`, 'month', 'views');
+                }
+            }
+
+            const labels = downloadsData.map(item => item.label);
+            const dataDownloads = downloadsData.map(item => item.value);
+            const dataViews = viewsData.map(item => item.value);
+
+            updateChart({ labels, dataDownloads, dataViews })
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    minusButton.addEventListener('click', async () => {
+
+        console.log('minus')
+        const currentValue = parseInt(inputElement.value);
+        if (currentValue > 2000 && currentValue <= moment().format('YYYY')) {
+            inputElement.value = currentValue - 1;
+        } else {
+            inputElement.value = moment().format('YYYY');
+        }
+
+        try {
+            const fetchData = new FetchData();
+            let downloadsData;
+            let viewsData;
+
+            if (CHART_TIME_INTERVAL === 'month') {
+                if (inputElement.value === moment().format('YYYY')) {
+                    downloadsData = await fetchData.fetchData(`${inputElement.value}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'files');
+                    viewsData = await fetchData.fetchData(`${inputElement.value}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'views');
+                } else {
+                    downloadsData = await fetchData.fetchData(`${inputElement.value}-01-01`, `${inputElement.value}-12-31`, 'month', 'files');
+                    viewsData = await fetchData.fetchData(`${inputElement.value}-01-01`, `${inputElement.value}-12-31`, 'month', 'views');
+                }
+            } else {
+                if (inputElement.value === moment().format('YYYY')) {
+                    downloadsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'files');
+                    viewsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, moment().subtract(1, 'days').format('YYYY-MM-DD'), 'month', 'views');
+                } else {
+                    downloadsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, `${inputElement.value}-12-31`, 'month', 'files');
+                    viewsData = await fetchData.fetchData(`${inputElement.value - 4}-01-01`, `${inputElement.value}-12-31`, 'month', 'views');
+                }
+            }
+
+            const labels = downloadsData.map(item => item.label);
+            const dataDownloads = downloadsData.map(item => item.value);
+            const dataViews = viewsData.map(item => item.value);
+
+            updateChart({ labels, dataDownloads, dataViews })
+        } catch (error) {
+            console.error(error);
+        }
+    });
 
     const updateChart = (period) => {
         const { labels, dataDownloads, dataViews } = period;
@@ -347,6 +497,11 @@
         chart.data.labels = labels;
         chart.data.datasets[0].data = dataDownloads;
         chart.data.datasets[2].data = dataViews;
+        if (CHART_TIME_INTERVAL === 'month') {
+            chart.options.plugins.title.text = 'Descargas y vistas por mes para ' + inputElement.value;
+        } else {
+            chart.options.plugins.title.text = 'Descargas y vistas por mes para ' + (inputElement.value - 4) + ' - ' + (inputElement.value);
+        }
         chart.update();
     };
 </script>
