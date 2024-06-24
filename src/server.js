@@ -68,12 +68,11 @@ server.get('/stats/issues/timeline', validateTimelineInterval, validateStatsIssu
         if (statusCode >= 400 && statusCode < 500) {
             //const data = await response.json();
             //console.error(data);
-            return res.status(statusCode).json(await response.text());
+            return res.status(statusCode).json({ error: await response.text() });
         }
 
-        if (statusCode >= 500 && statusCode < 600) {
-            console.error(await response.json());
-            return res.sendStatus(statusCode);
+        if (statusCode >= 500 && statusCode < 600) {            
+            return res.sendStatus(statusCode).json({ error: await response.text() });
         }
 
         const data = await response.json();
